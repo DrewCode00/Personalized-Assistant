@@ -23,6 +23,27 @@ export default function App() {
     })
   }
 
+  const generateImages=()=>{
+    console.log(inputMessage)
+    fetch("https://api.openai.com/v1/images/generations", {
+      method:"POST",
+      headers:{
+          "Content-Type": "application/json",
+          "Authoriztaion": "Bearer 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"
+      },
+      body:JSON.stringify({
+        "prompt": inputMessage ,
+        "n": 2,
+        "size": "1024x1980"
+      
+      })
+    }).then((response)=>response.json).then((data)=>{
+      console.logo(data.data[0].url)
+      setOutputMessage(data.data[0].url)
+    })
+  }
+
+
 
   const handleTextInput=(text)=>{
     swtInputMessage(text)
@@ -43,7 +64,7 @@ export default function App() {
         </view>
       
       
-      <TouchableOpacity onPress={handleButtonClick}>
+      <TouchableOpacity onPress={generateImages}>
         <view> style={{ backgroundColor: "red", padding: 5, marignRight: 10, marginBottom:20 }}
         <Text>Sends</Text>
         </view>
